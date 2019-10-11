@@ -3,11 +3,16 @@ package com.example.litepal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
+import org.litepal.exceptions.DataSupportException;
+
+import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -65,11 +70,21 @@ public class Main2Activity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LitePal.deleteAll(Book.class,"name = ?","水壶");
+                Toast.makeText(Main2Activity.this,"删除数据成功",Toast.LENGTH_LONG).show();
             }
         });
 
 
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Book> books = LitePal.findAll(Book.class);
+                for (Book book:books){
+                    Log.i("chen","book name is "+ book.getName());
+                }
+            }
+        });
 
 
     }
